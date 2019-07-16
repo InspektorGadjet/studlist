@@ -54,8 +54,14 @@ class UserTableGateway {
         $query = "SELECT * FROM users WHERE auth_key = :auth_key LIMIT 1";
         $exec = $this->db->prepare($query);
         $exec->execute([':auth_key' => $auth_key]);
-        $user = new User($exec->fetch());
-        return $user;
+        $data = $exec->fetch();
+
+        if($data != FALSE) { //если пользователь найден в бд, то создаем его экземпляр
+            $user = new User($data);
+            return $user;
+        } else {
+            throw new UserTableException("Неверный код авторизации");
+        }
     }
 
 }
