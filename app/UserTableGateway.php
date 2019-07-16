@@ -48,11 +48,31 @@ class UserTableGateway {
         $exec->setFetchMode(PDO::FETCH_CLASS, 'User');
         $user = $exec->fetch();
 
-        if($user != FALSE) {
+        if(!$user) { //если пользователь найдет в бд
             return $user;
         } else {
             throw new UserTableException("Пользователь не найден по коду авторизации");
         }
+    }
+
+    public function update_user(User $user) {
+        $query = "UPDATE users SET name = :name, surname = :surname, gender = :gender,
+            group_number = :group_number, email = :email, exam_score = :exam_score,
+            birth_year = :birth_year, place = :place, auth_key = :auth_key WHERE id = :id";
+
+        $exec = $this->db->prepare($query); 
+        $exec->execute([
+            ':id' => $user->id,
+            ':name' => $user->name,
+            ':surname' => $user->surname,
+            ':gender' => $user->gender,
+            ':group_number' => $user->group_number,
+            ':email' => $user->email,
+            ':exam_score' => $user->exam_score,
+            ':birth_year' => $user->birth_year,
+            ':place' => $user->place,
+            ':auth_key' => $user->auth_key,
+        ]);
     }
 
 }
