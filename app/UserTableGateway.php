@@ -23,22 +23,11 @@ class UserTableGateway {
         
         $users_data = []; //массив для объектов User
 
-        foreach($table_data as $row) { //создаем новый объект из данных строки в бд
-            $data = []; //массив данных для создания объекта user
-            $data['name'] = $row['name'];
-            $data['surname'] = $row['surname'];
-            $data['gender'] = $row['gender'];
-            $data['group_number'] = $row['group_number'];
-            $data['email'] = $row['email'];
-            $data['exam_score'] = $row['exam_score'];
-            $data['birth_year'] = $row['birth_year'];
-            $data['place'] = $row['place'];
-            $data['auth_key'] = $row['auth_key'];
-            
-            $user = new User($data);
+        foreach($table_data as $row) { 
+            $user = new User($row); //создаем новый объект из данных строки в бд
             $users_data[] = $user; //записываем наш объект в полный массив всех пользователей
         }
-        
+    
         return $users_data;
     }
 
@@ -54,11 +43,19 @@ class UserTableGateway {
         $query = "INSERT INTO users VALUE (NULL, :name, :surname, :gender, :group_number,
             :email, :exam_score, :birth_year, :place, :auth_key)"; //SQL запрос на добавление записи о пользователе
         $exec = $this->db->prepare($query); 
-        var_dump($data);
+
         foreach($data as $key=>$value) { //заполняем запрос параметрами из данных $data
             $exec->bindValue(':'.$key, $value); 
         }
         $exec->execute();
+    }
+
+    public function get_user_by_auth_key($auth_key) {
+        $query = "SELECT * FROM users WHERE auth_key = :auth_key LIMIT 1";
+        $exec = $this->db->prepare($query);
+        $exec->execute([':auth_key' => $auth_key]);
+        $user = new User($exec->fetch());
+        return $user;
     }
 
 }
