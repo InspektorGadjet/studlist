@@ -45,7 +45,8 @@ class UserTableGateway {
         $query = "SELECT * FROM users WHERE auth_key = :auth_key LIMIT 1";
         $exec = $this->db->prepare($query);
         $exec->execute([':auth_key' => $auth_key]);
-        $user = $exec->fetch(PDO::FETCH_CLASS, "User");
+        $exec->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $user = $exec->fetch();
 
         if($user != FALSE) {
             return $user;
