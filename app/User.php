@@ -22,7 +22,7 @@ class User {
     function __construct($data) //принимает массив данных для заполнения свойств объекта
     {
         $available_keys = ['id', 'name', 'surname', 'gender', 'group_number', 
-            'email', 'exam_score', 'birth_year', 'place', 'auth_key']; //доступные ключи для массива аргументов, они пойдут в свойства объекта
+            'email', 'exam_score', 'birth_year', 'place', 'auth_key']; //доступные ключи для массива $data, они пойдут в свойства объекта
 
         if(array_keys($data) != $available_keys) {
             throw new UserExeption("Неверные данные для создания экземляра User");
