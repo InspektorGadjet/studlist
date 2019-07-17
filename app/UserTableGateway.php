@@ -40,6 +40,7 @@ class UserTableGateway {
             ':auth_key' => $user->auth_key,
         ]);
     }
+    
 
     public function get_user_by_auth_key($auth_key) { //получить объект пользователя по коду авторизации
         $query = "SELECT * FROM users WHERE auth_key = :auth_key LIMIT 1";
@@ -48,14 +49,15 @@ class UserTableGateway {
         $exec->setFetchMode(PDO::FETCH_CLASS, 'User');
         $user = $exec->fetch();
 
-        if(!$user) { //если пользователь найдет в бд
+        if(!$user) { //если пользователь найден в бд
             return $user;
         } else {
             throw new UserTableException("Пользователь не найден по коду авторизации");
         }
     }
 
-    public function update_user(User $user) {
+
+    public function update_user(User $user) { //обновление данных пользователя
         $query = "UPDATE users SET name = :name, surname = :surname, gender = :gender,
             group_number = :group_number, email = :email, exam_score = :exam_score,
             birth_year = :birth_year, place = :place, auth_key = :auth_key WHERE id = :id";
@@ -75,4 +77,20 @@ class UserTableGateway {
         ]);
     }
 
+
+    public function search_users($str) //поиск пользователя, возвращает массив объектов User
+    {
+        $query = "SELECT * FROM users WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :str ORDER BY id DESC";
+        $exec = $this->db->prepare($query);
+        $exec->execute([
+            ':str' => '%'.$str.'%',
+        ]);
+        $users = $exec->fetchAll(PDO::FETCH_CLASS, 'User');
+
+        if(!empty($users)) {
+            return $users;
+        } else {
+            throw new UserTableException("Пользователь не найден");
+        }
+    }
 }
