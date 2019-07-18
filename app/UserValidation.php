@@ -19,6 +19,10 @@ class DataValidator {
         if(mb_strlen($name) < 1) {
             $this->errors[] = "Слишком короткое имя. Должен быть как минимум 1 символ, а вы ввели " . mb_strlen($name);
         }
+
+        if(!preg_match('/^[а-яёa-z\-\'[:space:]]+$/uis', $name)) {
+            $this->errors[] = "Недопустимые символы в имени. Допустимы буквы.";
+        }
     }
 
     private function valid_surname($surname)
@@ -29,6 +33,10 @@ class DataValidator {
 
         if(mb_strlen($surname) < 1) {
             $this->errors[] = "Слишком короткая фамилия. Должен быть как минимум 1 символ, а вы ввели " . mb_strlen($surname);
+        }
+
+        if(!preg_match('/^[а-яёa-z\-\'[:space:]]+$/uis', $surname)) {
+            $this->errors[] = "Недопустимые символы в фамилии. Допустимы буквы.";
         }
     }
     
