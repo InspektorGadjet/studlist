@@ -7,6 +7,7 @@
 class UserTableException extends Exception {}
 
 class UserTableGateway {
+    
     private $db;
 
 
@@ -16,13 +17,35 @@ class UserTableGateway {
     }
 
 
-    public function get_all_users() //возвращает массив объектов User всех пользователей
+    public function get_users($order_by, $search = NULL) //возвращает массив объектов User всех пользователей по критериям
     {
-        $query = "SELECT * FROM users ORDER BY id DESC";
-        $users_array = $this->db->query($query)->fetchAll(PDO::FETCH_CLASS, "User");
-        
-        return $users_array;
+        $query = "SELECT * FROM users"; //начало запроса
+
+        $bind_values = []; //массив для параметров запроса
+
+        if(!is_null($search)) { //если есть поиск, то добавляем к запросу 
+            $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :str";
+            $bind_values[':str'] = '%'.$search.'%';
+        }
+
+
+        if(in_array($order_by, ['id', 'name', 'surname'])) { //допустимые поля для сортировки
+            $query .= " ORDER BY ".$order_by; //добавляем сортировку к запросу
+        } else {
+            throw new UserTableException("Недопустимый параметр сортировки");
+        }
+
+        $exec = $this->db->prepare($query);
+        $exec->execute($bind_values); 
+        $users_array = $exec->fetchAll(PDO::FETCH_CLASS, "User");
+       
+        if(!empty($users_array)) {
+            return $users_array; 
+        } else {
+            throw new UserTableException("Пользователей не найдено");
+        }
     }
+
 
     public function create_new_user(User $user) { //запись пользователя в БД
         $query = "INSERT INTO users VALUE (NULL, :name, :surname, :gender, :group_number,
@@ -60,7 +83,7 @@ class UserTableGateway {
     public function update_user(User $user) { //обновление данных пользователя
         $query = "UPDATE users SET name = :name, surname = :surname, gender = :gender,
             group_number = :group_number, email = :email, exam_score = :exam_score,
-            birth_year = :birth_year, place = :place, auth_key = :auth_key WHERE id = :id";
+            birth_year = :birth_year, place = :place, auth_key = :auth_key WHERE id = :id LIMIT 1";
 
         $exec = $this->db->prepare($query); 
         $exec->execute([
@@ -75,22 +98,5 @@ class UserTableGateway {
             ':place' => $user->place,
             ':auth_key' => $user->auth_key,
         ]);
-    }
-
-
-    public function search_users($str) //поиск пользователя, возвращает массив объектов User
-    {
-        $query = "SELECT * FROM users WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :str ORDER BY id DESC";
-        $exec = $this->db->prepare($query);
-        $exec->execute([
-            ':str' => '%'.$str.'%',
-        ]);
-        $users = $exec->fetchAll(PDO::FETCH_CLASS, 'User');
-
-        if(!empty($users)) {
-            return $users;
-        } else {
-            throw new UserTableException("Пользователь не найден");
-        }
     }
 }
