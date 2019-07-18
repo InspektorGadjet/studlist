@@ -4,6 +4,10 @@
 # APP INIT FILE
 #
 
+include_once $_SERVER['DOCUMENT_ROOT']."/app/User.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/app/UserTableGateway.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/app/UserValidation.php";
+
 try {
     global $pdo;
     $pdo = new PDO('mysql:host=localhost;dbname=students',
