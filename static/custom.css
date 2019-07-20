@@ -1,0 +1,34 @@
+body {
+    padding-top: 5rem;
+}
+
+.starter-template {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+}
+
+.regform {
+    margin-top: 3rem;
+    max-width: 70%;
+    text-align: left;
+}
+
+.sendbtn {
+    width: 100%; 
+    margin-top: 1.5rem;
+}
