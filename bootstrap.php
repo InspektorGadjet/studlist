@@ -9,7 +9,6 @@ include_once $_SERVER['DOCUMENT_ROOT']."/app/UserTableGateway.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/app/UserValidation.php";
 
 try {
-    global $pdo;
     $pdo = new PDO('mysql:host=localhost;dbname=students',
     'root',
     '123',
@@ -21,4 +20,5 @@ try {
 catch(PDOException $e) {
     die("Нет соединения с базой данных <pre>".$e."</pre");
 }
-?>
+
+$user_gateway = new UserTableGateway($pdo);
