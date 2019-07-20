@@ -7,6 +7,7 @@
 include_once $_SERVER['DOCUMENT_ROOT']."/app/User.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/app/UserTableGateway.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/app/UserValidation.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/app/View.php";
 
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=students',
@@ -22,3 +23,4 @@ catch(PDOException $e) {
 }
 
 $user_gateway = new UserTableGateway($pdo);
+$view = new View();
