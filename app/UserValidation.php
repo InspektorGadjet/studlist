@@ -76,7 +76,7 @@ class DataValidator {
     private function valid_exam_score($score) 
     {
         if(ctype_digit($score)) {
-            if($score < 0) {
+            if($score < 1) {
                 $this->errors[] = "Количество баллов не может быть меньше 0";
             } 
 
