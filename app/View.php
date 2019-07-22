@@ -6,7 +6,7 @@
 
 class View {
 
-    const TPL_DIR = "tpl/";
+    const TPL_DIR = "../tpl/";
 
     public function render($template, $params = [])
     {
