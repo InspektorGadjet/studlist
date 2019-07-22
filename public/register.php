@@ -4,6 +4,6 @@
 # Register page controller
 #
 
-include_once $_SERVER['DOCUMENT_ROOT']."/bootstrap.php";
+include_once "../bootstrap.php";
 
 $view->render('register.phtml');
