@@ -80,23 +80,23 @@ class UserTableGateway {
     }
 
 
-    public function update_user(User $user) { //обновление данных пользователя
+    public function update_user(User $olduser, User $newuser) { //обновление данных пользователя
         $query = "UPDATE users SET name = :name, surname = :surname, gender = :gender,
             group_number = :group_number, email = :email, exam_score = :exam_score,
             birth_year = :birth_year, place = :place, auth_key = :auth_key WHERE id = :id LIMIT 1";
 
         $exec = $this->db->prepare($query); 
-        $exec->execute([
-            ':id' => $user->id,
-            ':name' => $user->name,
-            ':surname' => $user->surname,
-            ':gender' => $user->gender,
-            ':group_number' => $user->group_number,
-            ':email' => $user->email,
-            ':exam_score' => $user->exam_score,
-            ':birth_year' => $user->birth_year,
-            ':place' => $user->place,
-            ':auth_key' => $user->auth_key,
+        $exec->execute([ //обновляем все данные кроме id и authkey
+            ':id' => $olduser->id,
+            ':name' => $newuser->name,
+            ':surname' => $newuser->surname,
+            ':gender' => $newuser->gender,
+            ':group_number' => $newuser->group_number,
+            ':email' => $newuser->email,
+            ':exam_score' => $newuser->exam_score,
+            ':birth_year' => $newuser->birth_year,
+            ':place' => $newuser->place,
+            ':auth_key' => $olduser->auth_key,
         ]);
     }
 }
