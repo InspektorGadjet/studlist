@@ -72,7 +72,7 @@ class UserTableGateway {
         $exec->setFetchMode(PDO::FETCH_CLASS, 'User');
         $user = $exec->fetch();
 
-        if(!$user) { //если пользователь найден в бд
+        if($user) { //если пользователь найден в бд
             return $user;
         } else {
             throw new UserTableException("Пользователь не найден по коду авторизации");
