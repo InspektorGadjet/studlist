@@ -40,7 +40,12 @@
     <main role="main" class="container">
 
         <div class="starter-template">
-            <h1>Список студентов</h1>
+            <?php if($notification): ?>
+                <div class="alert alert-success col-sm-8 offset-sm-2 text-left" role="alert">
+                    <?=$notification ?>
+                </div>
+            <?php endif; ?>
+            <h1><?=$title ?></h1>
             <table class="table">
                 <thead>
                     <tr>
