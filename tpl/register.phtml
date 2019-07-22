@@ -37,9 +37,16 @@
     </nav>
 
     <main role="main" class="container">
-
         <div class="starter-template">
-            <h1>Форма регистрации студента</h1>
+            <?php if(isset($errors)): ?>
+                <?php foreach($errors as $error): ?>
+                    <div class="alert alert-danger col-sm-8 offset-sm-2 text-left" role="alert">
+                    Ошибка: <?=$error ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <h1><?=$title ?></h1>
             <div class="container regform">
                 <form action="register.php" method="post">
                     <div class="row form-group">
@@ -89,7 +96,7 @@
 
                         <div class="col-sm-4">
                             <label for="exam_score">Количество баллов</label>
-                            <input type="text" class="form-control" placeholder="Баллы" id="grexam_score" name="grexam_score">
+                            <input type="text" class="form-control" placeholder="Баллы" id="exam_score" name="exam_score">
                         </div>
 
                         <div class="col-sm-3 ">
