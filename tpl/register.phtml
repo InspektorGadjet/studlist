@@ -30,7 +30,7 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Поиск студентов" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Поиск студентов" aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0" type="submit">Найти</button>
             </form>
         </div>
@@ -38,13 +38,11 @@
 
     <main role="main" class="container">
         <div class="starter-template">
-            <?php if(isset($errors)): ?>
-                <?php foreach($errors as $error): ?>
-                    <div class="alert alert-danger col-sm-8 offset-sm-2 text-left" role="alert">
-                    Ошибка: <?=$error ?>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+            <?php foreach($errors as $error): ?>
+                <div class="alert alert-danger col-sm-8 offset-sm-2 text-left" role="alert">
+                Ошибка: <?=$error ?>
+                </div>
+            <?php endforeach; ?>
 
             <h1><?=$title ?></h1>
             <div class="container regform">
@@ -52,27 +50,27 @@
                     <div class="row form-group">
                         <div class="col-sm-6">
                             <label for="name">Имя</label>
-                            <input type="text" class="form-control" placeholder="Введите ваше имя" id="name" name="name">
+                            <input type="text" class="form-control" placeholder="Введите ваше имя" id="name" name="name" value="<?=$name ?>">
                         </div>
                         <div class="col-sm-6">
                             <label for="surname">Фамилия</label>
-                            <input type="text" class="form-control" placeholder="Введите вашу фамилию" id="surname" name="surname">
+                            <input type="text" class="form-control" placeholder="Введите вашу фамилию" id="surname" name="surname" value="<?=$surname ?>">
                         </div>
                     </div>
 
                     <div class="row form-group">
                         <div class="col-sm-6">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" placeholder="Введите ваш email" id="email" name="email">
+                            <input type="email" class="form-control" placeholder="Введите ваш email" id="email" name="email" value="<?=$email ?>">
                         </div>
                         <div class="col-sm-3">
                             <label for="group_number">Номер группы</label>
-                            <input type="text" class="form-control" placeholder="Группа" id="group_number" name="group_number">
+                            <input type="text" class="form-control" placeholder="Группа" id="group_number" name="group_number" value="<?=$group_number ?>">
                             <small class="form-text text-muted">От 2 до 5 символов</small>
                         </div>
                         <div class="col-sm-3">
                             <label for="birth_year">Год рождения</label>
-                            <input type="number" class="form-control" id="birth_year" name="birth_year" min="1901" max="2019" value="2000">
+                            <input type="number" class="form-control" id="birth_year" name="birth_year" min="1901" max="2019" value="2000" value="<?=$birth_year ?>">
                         </div>
                     </div>
 
@@ -81,13 +79,13 @@
                             <label for="exampleRadios1">Ваш пол</label>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" checked>
+                                <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" <?=($gender == 'male')? 'checked':''?>>
                                 <label class="form-check-label" for="exampleRadios1">
                                     Мужской
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="female">
+                                <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="female" <?=($gender == 'female')? 'checked':''?>>
                                 <label class="form-check-label" for="exampleRadios2">
                                     Женский
                                 </label>
@@ -96,20 +94,20 @@
 
                         <div class="col-sm-4">
                             <label for="exam_score">Количество баллов</label>
-                            <input type="text" class="form-control" placeholder="Баллы" id="exam_score" name="exam_score">
+                            <input type="text" class="form-control" placeholder="Баллы" id="exam_score" name="exam_score" value="<?=$exam_score ?>">
                         </div>
 
                         <div class="col-sm-3 ">
                             <label for="place">Откуда вы?</label>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="place" id="exampleRadios1" value="local" checked>
+                                <input class="form-check-input" type="radio" name="place" id="exampleRadios1" value="local" <?=($place == 'local')? 'checked':''?>>
                                 <label class="form-check-label" for="exampleRadios1">
                                     Местный
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="place" id="exampleRadios2" value="nonlocal">
+                                <input class="form-check-input" type="radio" name="place" id="exampleRadios2" value="nonlocal" <?=($place == 'nonlocal')? 'checked':''?>>
                                 <label class="form-check-label" for="exampleRadios2">
                                     Иногородний
                                 </label>
