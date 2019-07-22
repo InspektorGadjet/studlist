@@ -7,26 +7,70 @@
 include_once "../bootstrap.php";
 
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистрацию
-    $user = new User();
+if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистрацию или обновление
+    $user = new User(); //объект с данными пользователя из формы
     $validator = new DataValidator();
 
     $user->fill_from_post($_POST);
-    $user->auth_key = User::get_random_auth_key();
 
-    if($validator->is_user_valid($user)) {
-        $user_gateway->create_new_user($user);
-        setcookie('auth_key', $user->auth_key, time() + 3600*24*365*10, '/');
-        header('location: /');
-    } else {
+
+    if($validator->is_user_valid($user)) { //если нет ошибок в форме
+
+        if(isset($_COOKIE['auth_key'])) { //если есть кука, то редактируем пользователя
+            $current_user = $user_gateway->get_user_by_auth_key($_COOKIE['auth_key']);
+            $user_gateway->update_user($current_user, $user); //заменяем данные текущего пользователя на данные из формы в $user
+            header('location: /index.php?note=updated');
+        } else { //если куки нет, то создаем нового пользователя
+            $user->auth_key = User::get_random_auth_key();
+            $user_gateway->create_new_user($user);
+            setcookie('auth_key', $user->auth_key, time() + 3600*24*365*10, '/');
+            header('location: /index.php?note=registred');
+        }
+
+    } else { //если форма с ошибками, то снова выводим её
+
         $view->render('register.phtml', [
             'title' => 'Форма регистрации студента',
-            'errors' => $validator->errors
-            ]);
+            'errors' => $validator->errors,
+            'name' => $user->name,
+            'surname' => $user->surname,
+            'email' => $user->email,
+            'group_number' => $user->group_number,
+            'birth_year' => $user->birth_year,
+            'gender' => $user->gender,
+            'exam_score' => $user->exam_score,
+            'place' => $user->place,
+        ]);
     }
     die();
 }
 
-$view->render('register.phtml', [
-    'title' => 'Форма регистрации студента',
-]);
+
+if(isset($_COOKIE['auth_key'])) { //если пользователь авторизован
+    $current_user = $user_gateway->get_user_by_auth_key($_COOKIE['auth_key']);
+    $view->render('register.phtml', [
+        'title' => 'Форма редактирования студента',
+        'errors' => [],
+        'name' => $current_user->name,
+        'surname' => $current_user->surname,
+        'email' => $current_user->email,
+        'group_number' => $current_user->group_number,
+        'birth_year' => $current_user->birth_year,
+        'gender' => $current_user->gender,
+        'exam_score' => $current_user->exam_score,
+        'place' => $current_user->place,
+    ]);
+} else {
+    $view->render('register.phtml', [
+        'title' => 'Форма регистрации студента',
+        'errors' => [],
+        'name' => '',
+        'surname' => '',
+        'email' => '',
+        'group_number' => '',
+        'birth_year' => '2000',
+        'gender' => 'male',
+        'exam_score' => '',
+        'place' => 'local',
+    ]);
+}
