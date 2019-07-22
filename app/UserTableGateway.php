@@ -17,7 +17,7 @@ class UserTableGateway {
     }
 
 
-    public function get_users($order_by, $search = NULL) //возвращает массив объектов User всех пользователей по критериям
+    public function get_users($order_by, $reverse = FALSE, $search = NULL) //возвращает массив объектов User всех пользователей по критериям
     {
         $query = "SELECT * FROM users"; //начало запроса
 
@@ -33,6 +33,12 @@ class UserTableGateway {
             $query .= " ORDER BY ".$order_by; //добавляем сортировку к запросу
         } else {
             throw new UserTableException("Недопустимый параметр сортировки");
+        }
+
+        if($reverse) {
+            $query .= " ASC";
+        } else {
+            $query .= " DESC";
         }
 
         $exec = $this->db->prepare($query);
