@@ -17,6 +17,8 @@ if(isset($_GET['note'])) { //вывод уведомлений в шаблон
     }
 }
 
+
+
 #
 #   Разбираем параметры запроса
 #
@@ -25,7 +27,7 @@ if(isset($_GET['note'])) { //вывод уведомлений в шаблон
 #       SEARCH
 if(isset($_GET['search'])) { //запрос на поиск
     $search = $_GET['search'];
-    $title = 'Студенты по запросу "' . $search . '"';
+    $title = 'Студенты по запросу "' . htmlspecialchars($search) . '"';
 } else {
     $search = NULL;
     $title = "Список студентов";
@@ -39,8 +41,15 @@ if(isset($_GET['sort_by'])) {
     $sort_by = 'id';
 }
 
+#       REVERSE
+if(isset($_GET['reverse'])) {
+    $reverse = boolval($_GET['reverse']);
+} else {
+    $reverse = true;
+}
 
-$users = $user_gateway->get_users($sort_by, true, $search);
+
+$users = $user_gateway->get_users($sort_by, $reverse, $search);
 $view->render('index.phtml', [
     'users' => $users,
     'notification' => $notification ?? '',
