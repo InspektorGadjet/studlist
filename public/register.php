@@ -40,6 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистра�
             'gender' => $user->gender,
             'exam_score' => $user->exam_score,
             'place' => $user->place,
+            'current_page' => 'reg',
         ]);
     }
     die();
@@ -59,6 +60,7 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
         'gender' => $current_user->gender,
         'exam_score' => $current_user->exam_score,
         'place' => $current_user->place,
+        'current_page' => 'reg'
     ]);
 } else {
     $view->render('register.phtml', [
@@ -72,5 +74,6 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
         'gender' => 'male',
         'exam_score' => '',
         'place' => 'local',
+        'current_page' => 'reg'
     ]);
 }
