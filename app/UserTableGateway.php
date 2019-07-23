@@ -23,13 +23,14 @@ class UserTableGateway {
 
         $bind_values = []; //массив для параметров запроса
 
-        if(!is_null($search)) { //если есть поиск, то добавляем к запросу 
+        if(!is_null($search)) { //если есть поиск, то добавляем к запросу
+            $search = strval(htmlspecialchars(trim($search))); 
             $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :str";
             $bind_values[':str'] = '%'.$search.'%';
         }
 
 
-        if(in_array($order_by, ['id', 'name', 'surname'])) { //допустимые поля для сортировки
+        if(in_array($order_by, ['id', 'name', 'surname', 'group_number', 'exam_score'])) { //допустимые поля для сортировки
             $query .= " ORDER BY ".$order_by; //добавляем сортировку к запросу
         } else {
             throw new UserTableException("Недопустимый параметр сортировки");
@@ -45,11 +46,7 @@ class UserTableGateway {
         $exec->execute($bind_values); 
         $users_array = $exec->fetchAll(PDO::FETCH_CLASS, "User");
        
-        if(!empty($users_array)) {
-            return $users_array; 
-        } else {
-            throw new UserTableException("Пользователей не найдено");
-        }
+        return $users_array; 
     }
 
 
