@@ -12,10 +12,26 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">Номер группы</th>
-                    <th scope="col">Баллов</th>
+                    <th scope="col">
+                        Имя 
+                        <a href="<?=View::get_sort_link('name', false)?>"> ▼</a> 
+                        <a href="<?=View::get_sort_link('name', true)?>"> ▲</a> 
+                    </th>
+                    <th scope="col">
+                        Фамилия 
+                        <a href="<?=View::get_sort_link('surname', false)?>"> ▼</a> 
+                        <a href="<?=View::get_sort_link('surname', true)?>"> ▲</a> 
+                    </th>
+                    <th scope="col">
+                        Номер группы
+                        <a href="<?=View::get_sort_link('group_number', false)?>"> ▼</a> 
+                        <a href="<?=View::get_sort_link('group_number', true)?>"> ▲</a> 
+                    </th>
+                    <th scope="col">
+                        Кол-во баллов
+                        <a href="<?=View::get_sort_link('exam_score', false)?>"> ▼</a> 
+                        <a href="<?=View::get_sort_link('exam_score', true)?>"> ▲</a> 
+                    </th>
                 </tr>
             </thead>
             <tbody>
