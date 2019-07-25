@@ -13,39 +13,51 @@
             <thead>
                 <tr>
                     <th scope="col">
-                        Имя 
-                        <a href="<?=View::get_sort_link('name', false)?>"> ▼</a> 
-                        <a href="<?=View::get_sort_link('name', true)?>"> ▲</a> 
+                        Имя
+                        <a href="<?= View::get_sort_link('name', false) ?>"> ▼</a>
+                        <a href="<?= View::get_sort_link('name', true) ?>"> ▲</a>
                     </th>
                     <th scope="col">
-                        Фамилия 
-                        <a href="<?=View::get_sort_link('surname', false)?>"> ▼</a> 
-                        <a href="<?=View::get_sort_link('surname', true)?>"> ▲</a> 
+                        Фамилия
+                        <a href="<?= View::get_sort_link('surname', false) ?>"> ▼</a>
+                        <a href="<?= View::get_sort_link('surname', true) ?>"> ▲</a>
                     </th>
                     <th scope="col">
                         Номер группы
-                        <a href="<?=View::get_sort_link('group_number', false)?>"> ▼</a> 
-                        <a href="<?=View::get_sort_link('group_number', true)?>"> ▲</a> 
+                        <a href="<?= View::get_sort_link('group_number', false) ?>"> ▼</a>
+                        <a href="<?= View::get_sort_link('group_number', true) ?>"> ▲</a>
                     </th>
                     <th scope="col">
                         Кол-во баллов
-                        <a href="<?=View::get_sort_link('exam_score', false)?>"> ▼</a> 
-                        <a href="<?=View::get_sort_link('exam_score', true)?>"> ▲</a> 
+                        <a href="<?= View::get_sort_link('exam_score', false) ?>"> ▼</a>
+                        <a href="<?= View::get_sort_link('exam_score', true) ?>"> ▲</a>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($users as $user) : ?>
                     <tr>
-                        <td><?= $user->name ?></td>
-                        <td><?= $user->surname ?></td>
-                        <td><?= $user->group_number ?></td>
-                        <td><?= $user->exam_score ?></td>
+                        <td><?= htmlspecialchars($user->name) ?></td>
+                        <td><?= htmlspecialchars($user->surname) ?></td>
+                        <td><?= htmlspecialchars($user->group_number) ?></td>
+                        <td><?= htmlspecialchars($user->exam_score) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+
+    <?php if($paginator->enabled): ?>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <?php foreach($paginator->get_total_pages_array() as $page): ?>
+                    <li class="page-item"><a class="page-link" href="<?=View::get_page_link($page)?>"><?=$page?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
+    <?php endif; ?>
+
+
 
 </main><!-- /.container -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

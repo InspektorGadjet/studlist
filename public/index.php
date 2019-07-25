@@ -48,11 +48,30 @@ if(isset($_GET['reverse'])) {
     $reverse = true;
 }
 
+#       PAGE
+if(isset($_GET['page'])) {
+    $page_num = intval($_GET['page']);
+} else {
+    $page_num = 1;
+}
+$items_per_page = 5;
+$paginator = new Paginator($user_gateway->get_users_number(), $items_per_page, $page_num);
 
-$users = $user_gateway->get_users($sort_by, $reverse, $search);
+
+
+
+$users = $user_gateway->get_users(
+    $sort_by, 
+    $reverse, 
+    $paginator->get_limit(), 
+    $paginator->get_offset(),
+    $search
+);
+
 $view->render('index.phtml', [
     'users' => $users,
     'notification' => $notification ?? '',
     'title' => $title,
     'current_page' => 'index',
+    'paginator' => $paginator,
 ]);
