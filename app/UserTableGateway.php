@@ -49,6 +49,13 @@ class UserTableGateway {
         return $users_array; 
     }
 
+    public function get_users_number()
+    {
+        $query = "SELECT COUNT(*) FROM users";
+        $exec = $this->db->query($query);
+        return $exec->fetch();
+    }
+
 
     public function create_new_user(User $user) { //запись пользователя в БД
         $query = "INSERT INTO users VALUE (NULL, :name, :surname, :gender, :group_number,
