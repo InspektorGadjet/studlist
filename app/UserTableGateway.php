@@ -17,16 +17,13 @@ class UserTableGateway {
     }
 
 
-    public function get_users($order_by, $reverse = FALSE, $search = NULL) //возвращает массив объектов User всех пользователей по критериям
+    public function get_users($order_by, $reverse = FALSE, $limit, $offset, $search = NULL) //возвращает массив объектов User всех пользователей по критериям
     {
         $query = "SELECT * FROM users"; //начало запроса
 
-        $bind_values = []; //массив для параметров запроса
-
         if(!is_null($search)) { //если есть поиск, то добавляем к запросу
-            $search = strval(htmlspecialchars(trim($search))); 
-            $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :str";
-            $bind_values[':str'] = '%'.$search.'%';
+            $search = strval(trim($search)); 
+            $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :search";
         }
 
 
@@ -42,10 +39,21 @@ class UserTableGateway {
             $query .= " DESC";
         }
 
+        $query .= " LIMIT :limit OFFSET :offset"; //добавим лимит к запросу
+
+
         $exec = $this->db->prepare($query);
-        $exec->execute($bind_values); 
+
+        //биндим параметры
+        if(!is_null($search)) {
+            $exec->bindValue(':search', '%'.$search.'%'); 
+        }
+        $exec->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $exec->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $exec->execute(); 
+
+
         $users_array = $exec->fetchAll(PDO::FETCH_CLASS, "User");
-       
         return $users_array; 
     }
 
@@ -53,7 +61,7 @@ class UserTableGateway {
     {
         $query = "SELECT COUNT(*) FROM users";
         $exec = $this->db->query($query);
-        return $exec->fetch();
+        return $exec->fetchColumn();
     }
 
 
