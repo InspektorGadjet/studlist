@@ -8,6 +8,7 @@ include_once "../app/User.php";
 include_once "../app/UserTableGateway.php";
 include_once "../app/UserValidation.php";
 include_once "../app/View.php";
+include_once "../app/Paginator.php";
 
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=students',
