@@ -45,7 +45,7 @@ if(isset($_GET['sort_by'])) {
 if(isset($_GET['reverse'])) {
     $reverse = boolval($_GET['reverse']);
 } else {
-    $reverse = true;
+    $reverse = false;
 }
 
 #       PAGE

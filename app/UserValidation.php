@@ -6,7 +6,7 @@
 
 class ValidatorException extends Exception {}
 
-class DataValidator {
+class UserValidation {
     public $errors = [];
 
 

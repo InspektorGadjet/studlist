@@ -14,27 +14,27 @@
                 <div class="row form-group">
                     <div class="col-sm-6">
                         <label for="name">Имя</label>
-                        <input type="text" class="form-control" placeholder="Введите ваше имя" id="name" name="name" value="<?= $name ?>">
+                        <input type="text" class="form-control" placeholder="Введите ваше имя" id="name" name="name" value="<?= $name ?>" pattern="[а-яёa-zА-ЯЁA-Z-'\s]+" title="Можно ввести буквы, пробел и символы ' -" required>
                     </div>
                     <div class="col-sm-6">
                         <label for="surname">Фамилия</label>
-                        <input type="text" class="form-control" placeholder="Введите вашу фамилию" id="surname" name="surname" value="<?= $surname ?>">
+                        <input type="text" class="form-control" placeholder="Введите вашу фамилию" id="surname" name="surname" value="<?= $surname ?>" pattern="[а-яёa-zА-ЯЁA-Z-'\s]+" title="Можно ввести буквы, пробел и символы ' -" required>
                     </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col-sm-6">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" placeholder="Введите ваш email" id="email" name="email" value="<?= $email ?>">
+                        <input type="email" class="form-control" placeholder="Введите ваш email" id="email" name="email" value="<?= $email ?>" required>
                     </div>
                     <div class="col-sm-3">
                         <label for="group_number">Номер группы</label>
-                        <input type="text" class="form-control" placeholder="Группа" id="group_number" name="group_number" value="<?= $group_number ?>">
+                        <input type="text" class="form-control" placeholder="Группа" id="group_number" name="group_number" value="<?= $group_number ?>" pattern="[а-яёa-zА-ЯЁA-Z0-9]+" title="Можно ввести только буквы и цифры" required>
                         <small class="form-text text-muted">От 2 до 5 символов</small>
                     </div>
                     <div class="col-sm-3">
                         <label for="birth_year">Год рождения</label>
-                        <input type="number" class="form-control" id="birth_year" name="birth_year" min="1901" max="2019" value="2000" value="<?= $birth_year ?>">
+                        <input type="number" class="form-control" id="birth_year" name="birth_year" min="1901" max="2019" value="2000" value="<?= $birth_year ?>" required> 
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                         <label for="exampleRadios1">Ваш пол</label>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" <?= ($gender == User::GENDER_MALE) ? 'checked' : '' ?>>
+                            <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" <?= ($gender == User::GENDER_MALE) ? 'checked' : '' ?> >
                             <label class="form-check-label" for="exampleRadios1">
                                 Мужской
                             </label>
@@ -58,7 +58,7 @@
 
                     <div class="col-sm-4">
                         <label for="exam_score">Количество баллов</label>
-                        <input type="text" class="form-control" placeholder="Баллы" id="exam_score" name="exam_score" value="<?= $exam_score ?>">
+                        <input type="text" class="form-control" placeholder="Баллы" id="exam_score" name="exam_score" value="<?= $exam_score ?>" pattern="[0-9]+" title="Можно ввести только цифры" required>
                     </div>
 
                     <div class="col-sm-3 ">

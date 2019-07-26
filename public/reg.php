@@ -9,7 +9,7 @@ include_once "../bootstrap.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистрацию или обновление
     $user = new User(); //объект с данными пользователя из формы
-    $validator = new DataValidator();
+    $validator = new UserValidation();
 
     $user->fill_from_post($_POST);
 
