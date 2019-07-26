@@ -20,6 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистра�
             $current_user = $user_gateway->get_user_by_auth_key($_COOKIE['auth_key']);
             $user_gateway->update_user($current_user, $user); //заменяем данные текущего пользователя на данные из формы в $user
             header('location: /index.php?note=updated');
+
         } else { //если куки нет, то создаем нового пользователя
             $user->auth_key = User::get_random_auth_key();
             $user_gateway->create_new_user($user);
@@ -29,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистра�
 
     } else { //если форма с ошибками, то снова выводим её
 
-        $view->render('register.phtml', [
+        $view->render('reg.phtml', [
             'title' => 'Форма регистрации студента',
             'errors' => $validator->errors,
             'name' => $user->name,
@@ -49,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистра�
 
 if(isset($_COOKIE['auth_key'])) { //если пользователь авторизован
     $current_user = $user_gateway->get_user_by_auth_key($_COOKIE['auth_key']);
-    $view->render('register.phtml', [
+    $view->render('reg.phtml', [
         'title' => 'Форма редактирования студента',
         'errors' => [],
         'name' => $current_user->name,
@@ -62,8 +63,9 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
         'place' => $current_user->place,
         'current_page' => 'reg'
     ]);
+    
 } else {
-    $view->render('register.phtml', [
+    $view->render('reg.phtml', [
         'title' => 'Форма регистрации студента',
         'errors' => [],
         'name' => '',

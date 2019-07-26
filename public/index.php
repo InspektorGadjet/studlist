@@ -36,7 +36,7 @@ if(isset($_GET['search'])) { //запрос на поиск
 
 #       SORT_BY
 if(isset($_GET['sort_by'])) {
-    $sort_by = $_GET['sort_by'];
+    $sort_by = strval($_GET['sort_by']);
 } else {
     $sort_by = 'id';
 }

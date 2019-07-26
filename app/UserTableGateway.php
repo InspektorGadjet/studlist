@@ -17,7 +17,7 @@ class UserTableGateway {
     }
 
 
-    public function get_users($order_by, $reverse = FALSE, $limit, $offset, $search = '') //возвращает массив объектов User всех пользователей по критериям
+    public function get_users($order_by, $reverse, $limit, $offset, $search = '') //возвращает массив объектов User всех пользователей по критериям
     {
         $query = "SELECT * FROM users"; //начало запроса
 
