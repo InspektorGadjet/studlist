@@ -29,7 +29,7 @@ if(isset($_GET['search'])) { //запрос на поиск
     $search = $_GET['search'];
     $title = 'Студенты по запросу "' . htmlspecialchars($search) . '"';
 } else {
-    $search = NULL;
+    $search = '';
     $title = "Список студентов";
 }
 

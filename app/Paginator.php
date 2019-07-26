@@ -8,10 +8,10 @@ class PaginatorException extends Exception {}
 
 class Paginator {
     public $enabled;
+    public $current_page;
 
     private $total_items;
     private $items_per_page;
-    private $current_page;
 
     public function __construct($total_items, $items_per_page, $current_page)
     {

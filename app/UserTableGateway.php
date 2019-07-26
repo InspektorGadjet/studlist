@@ -50,7 +50,7 @@ class UserTableGateway {
 
 
         $users_array = $exec->fetchAll(PDO::FETCH_CLASS, "User");
-        return $users_array; 
+        return $users_array;
     }
 
     public function get_users_number($search = '')
