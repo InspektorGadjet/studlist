@@ -17,14 +17,13 @@ class UserTableGateway {
     }
 
 
-    public function get_users($order_by, $reverse = FALSE, $limit, $offset, $search = NULL) //возвращает массив объектов User всех пользователей по критериям
+    public function get_users($order_by, $reverse = FALSE, $limit, $offset, $search = '') //возвращает массив объектов User всех пользователей по критериям
     {
         $query = "SELECT * FROM users"; //начало запроса
 
-        if(!is_null($search)) { //если есть поиск, то добавляем к запросу
-            $search = strval(trim($search)); 
-            $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :search";
-        }
+        $search = strval(trim($search)); 
+        $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :search"; //добавляем поиск к запросу
+        
 
 
         if(in_array($order_by, ['id', 'name', 'surname', 'group_number', 'exam_score'])) { //допустимые поля для сортировки
@@ -41,13 +40,10 @@ class UserTableGateway {
 
         $query .= " LIMIT :limit OFFSET :offset"; //добавим лимит к запросу
 
-
         $exec = $this->db->prepare($query);
 
         //биндим параметры
-        if(!is_null($search)) {
-            $exec->bindValue(':search', '%'.$search.'%'); 
-        }
+        $exec->bindValue(':search', '%'.$search.'%'); 
         $exec->bindValue(':limit', $limit, PDO::PARAM_INT);
         $exec->bindValue(':offset', $offset, PDO::PARAM_INT);
         $exec->execute(); 
@@ -57,10 +53,13 @@ class UserTableGateway {
         return $users_array; 
     }
 
-    public function get_users_number()
+    public function get_users_number($search = '')
     {
-        $query = "SELECT COUNT(*) FROM users";
-        $exec = $this->db->query($query);
+        $query = "SELECT COUNT(*) FROM users WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :search";
+        $exec = $this->db->prepare($query);
+        $exec->bindValue(':search', '%'.$search.'%'); 
+        $exec->execute();
+        
         return $exec->fetchColumn();
     }
 

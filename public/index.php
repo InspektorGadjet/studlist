@@ -55,7 +55,7 @@ if(isset($_GET['page'])) {
     $page_num = 1;
 }
 $items_per_page = 5;
-$paginator = new Paginator($user_gateway->get_users_number(), $items_per_page, $page_num);
+$paginator = new Paginator($user_gateway->get_users_number($search), $items_per_page, $page_num);
 
 
 
@@ -65,7 +65,7 @@ $users = $user_gateway->get_users(
     $reverse, 
     $paginator->get_limit(), 
     $paginator->get_offset(),
-    $search
+    $search,
 );
 
 $view->render('index.phtml', [
