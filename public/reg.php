@@ -49,9 +49,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистра�
 
 
 if(isset($_COOKIE['auth_key'])) { //если пользователь авторизован
-    $current_user = $user_gateway->get_user_by_auth_key($_COOKIE['auth_key']);
-    $view->render('reg.phtml', [
-        'title' => 'Форма редактирования студента',
+    $current_user = $user_gateway->get_user_by_auth_key($_COOKIE['auth_key']); //выводим форму редактировния
+    $view->render('reg.phtml', [ //выводим форму редактировния
+        'title' => 'Форма редактирования студента', 
         'errors' => [],
         'name' => $current_user->name,
         'surname' => $current_user->surname,
@@ -65,7 +65,7 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
     ]);
     
 } else {
-    $view->render('reg.phtml', [
+    $view->render('reg.phtml', [ //если не авторизован, выводим форму регистрации
         'title' => 'Форма регистрации студента',
         'errors' => [],
         'name' => '',

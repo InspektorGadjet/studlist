@@ -60,7 +60,7 @@ $paginator = new Paginator($user_gateway->get_users_number($search), $items_per_
 
 
 
-$users = $user_gateway->get_users(
+$users = $user_gateway->get_users( //получаем пользователей
     $sort_by, 
     $reverse, 
     $paginator->get_limit(), 
@@ -68,7 +68,7 @@ $users = $user_gateway->get_users(
     $search,
 );
 
-$view->render('index.phtml', [
+$view->render('index.phtml', [ //выводим шаблон
     'users' => $users,
     'notification' => $notification ?? '',
     'title' => $title,
