@@ -4,19 +4,21 @@
 # APP INIT FILE
 #
 
-include_once "../app/User.php";
-include_once "../app/UserTableGateway.php";
-include_once "../app/UserValidation.php";
-include_once "../app/View.php";
-include_once "../app/Paginator.php";
+spl_autoload_register(function ($class) {  //автозагрузка классов
+    $path = '../app/' . $class . '.php';
+    if (file_exists($path)) {
+        require_once $path;
+    }
+});
 
-$dbconfig = parse_ini_file('dbconfig.ini');
+
+$dbconfig = parse_ini_file('dbconfig.ini'); //парсим конфиг базы данных
 if(!$dbconfig) {
     throw new Exception("Неверный путь к dbconfig.ini");
 }
 
 
-try {
+try { //подключаемся к бд
     $pdo = new PDO('mysql:host=' . $dbconfig['host'] . ';dbname=' . $dbconfig['database'],
         $dbconfig['user'],
         $dbconfig['password'],
