@@ -43,13 +43,13 @@
                         <label for="exampleRadios1">Ваш пол</label>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" <?= ($gender == 'male') ? 'checked' : '' ?>>
+                            <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" <?= ($gender == User::GENDER_MALE) ? 'checked' : '' ?>>
                             <label class="form-check-label" for="exampleRadios1">
                                 Мужской
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="female" <?= ($gender == 'female') ? 'checked' : '' ?>>
+                            <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="female" <?= ($gender == User::GENDER_FEMALE) ? 'checked' : '' ?>>
                             <label class="form-check-label" for="exampleRadios2">
                                 Женский
                             </label>
@@ -65,13 +65,13 @@
                         <label for="place">Откуда вы?</label>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="place" id="exampleRadios1" value="local" <?= ($place == 'local') ? 'checked' : '' ?>>
+                            <input class="form-check-input" type="radio" name="place" id="exampleRadios1" value="local" <?= ($place == User::PLACE_LOCAL) ? 'checked' : '' ?>>
                             <label class="form-check-label" for="exampleRadios1">
                                 Местный
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="place" id="exampleRadios2" value="nonlocal" <?= ($place == 'nonlocal') ? 'checked' : '' ?>>
+                            <input class="form-check-input" type="radio" name="place" id="exampleRadios2" value="nonlocal" <?= ($place == User::PLACE_NONLOCAL) ? 'checked' : '' ?>>
                             <label class="form-check-label" for="exampleRadios2">
                                 Иногородний
                             </label>

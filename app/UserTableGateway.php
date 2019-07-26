@@ -19,12 +19,7 @@ class UserTableGateway {
 
     public function get_users($order_by, $reverse, $limit, $offset, $search = '') //возвращает массив объектов User всех пользователей по критериям
     {
-        $query = "SELECT * FROM users"; //начало запроса
-
-        $search = strval(trim($search)); 
-        $query .= " WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :search"; //добавляем поиск к запросу
-        
-
+        $query = "SELECT * FROM users WHERE CONCAT(name, ' ', surname, ' ', group_number) LIKE :search"; //начало запроса
 
         if(in_array($order_by, ['id', 'name', 'surname', 'group_number', 'exam_score'])) { //допустимые поля для сортировки
             $query .= " ORDER BY ".$order_by; //добавляем сортировку к запросу
@@ -32,26 +27,23 @@ class UserTableGateway {
             throw new UserTableException("Недопустимый параметр сортировки");
         }
 
-        if($reverse) {
-            $query .= " ASC";
-        } else {
-            $query .= " DESC";
-        }
-
+        $query .= ($reverse) ? " ASC" : " DESC"; //укажем порядок сортировки
         $query .= " LIMIT :limit OFFSET :offset"; //добавим лимит к запросу
 
-        $exec = $this->db->prepare($query);
 
+        $exec = $this->db->prepare($query);
+        
         //биндим параметры
+        $search = strval(trim($search)); 
         $exec->bindValue(':search', '%'.$search.'%'); 
         $exec->bindValue(':limit', $limit, PDO::PARAM_INT);
         $exec->bindValue(':offset', $offset, PDO::PARAM_INT);
+        
         $exec->execute(); 
-
-
         $users_array = $exec->fetchAll(PDO::FETCH_CLASS, "User");
         return $users_array;
     }
+    
 
     public function get_users_number($search = '')
     {

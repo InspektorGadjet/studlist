@@ -73,7 +73,7 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
         'email' => '',
         'group_number' => '',
         'birth_year' => '2000',
-        'gender' => 'male',
+        'gender' => User::GENDER_MALE,
         'exam_score' => '',
         'place' => 'local',
         'current_page' => 'reg'

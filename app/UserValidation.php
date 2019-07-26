@@ -42,7 +42,7 @@ class DataValidator {
     
     private function valid_gender($gender) 
     {
-        if(!in_array($gender, ['male', 'female'])) {
+        if(!in_array($gender, [User::GENDER_MALE, User::GENDER_FEMALE])) {
             $this->errors[] = "Неверный пол";
         }
     }
@@ -105,7 +105,7 @@ class DataValidator {
 
     private function valid_place($place)
     {
-        if(!in_array($place, ['local', 'nonlocal'])) {
+        if(!in_array($place, [User::PLACE_LOCAL, User::PLACE_NONLOCAL])) {
             $this->errors[] = "Неверное место";
         }
     }

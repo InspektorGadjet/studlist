@@ -19,6 +19,11 @@ class User {
     public $place;
     public $auth_key;
 
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
+    const PLACE_LOCAL = 'local';
+    const PLACE_NONLOCAL = 'nonlocal';
+
     public static function get_random_auth_key() 
     {
         return substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,32);

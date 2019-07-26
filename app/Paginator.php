@@ -26,7 +26,7 @@ class Paginator {
         }
     }
 
-    public function get_total_pages_array() 
+    public function get_total_pages_array() //получаем массив [1, 2, ... $total_pages]
     {
         $total_pages = ceil($this->total_items / $this->items_per_page);
         return range(1, $total_pages);
