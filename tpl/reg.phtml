@@ -84,6 +84,8 @@
                         <button type="submit" class="btn btn-primary btn-bg sendbtn">Отправить</button>
                     </div>
                 </div>
+
+                <input type="hidden" name="CSRF_token" value="<?=htmlspecialchars($token)?>">
             </form>
         </div>
     </div>

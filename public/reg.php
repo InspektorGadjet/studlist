@@ -6,8 +6,21 @@
 
 include_once "../bootstrap.php";
 
+$CSRFchecker = new CSRFchecker(); //проверка CSRF токена
+if($CSRFchecker->is_token_set($_COOKIE)) {
+    $CSRFchecker->get_cookie_token($_COOKIE); 
+} else {
+    $CSRFchecker->set_cookie_token($_COOKIE);
+}
+
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистрацию или обновление
+
+    if(!$CSRFchecker->is_token_right($_POST, $_COOKIE)) {
+        throw new CSRFexception("Ошибка в CSRF токене");
+        die();
+    }
+
     $user = new User(); //объект с данными пользователя из формы
     $validator = new UserValidation();
 
@@ -42,6 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') { //запрос на регистра�
             'exam_score' => $user->exam_score,
             'place' => $user->place,
             'current_page' => 'reg',
+            'token' => $CSRFchecker->token,
         ]);
     }
     die();
@@ -61,7 +75,8 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
         'gender' => $current_user->gender,
         'exam_score' => $current_user->exam_score,
         'place' => $current_user->place,
-        'current_page' => 'reg'
+        'current_page' => 'reg',
+        'token' => $CSRFchecker->token,
     ]);
     
 } else {
@@ -76,6 +91,7 @@ if(isset($_COOKIE['auth_key'])) { //если пользователь автор
         'gender' => User::GENDER_MALE,
         'exam_score' => '',
         'place' => 'local',
-        'current_page' => 'reg'
+        'current_page' => 'reg',
+        'token' => $CSRFchecker->token,
     ]);
 }
